@@ -1,0 +1,141 @@
+.transactions-page {
+    height: 100vh;
+
+    overflow: hidden;
+
+    background: #f8fbff;
+}
+
+.transactions-header {
+    height: 72px;
+
+    padding: 0 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #d7e0ea;
+}
+
+.logo-image {
+    height: 52px;
+
+    object-fit: contain;
+}
+
+.hero-section {
+    width: 1120px;
+
+    margin: 24px auto 0;
+
+    display: grid;
+    grid-template-columns: 360px 1fr;
+
+    gap: 60px;
+
+    align-items: start;
+}
+
+.hero-left {
+    position: relative;
+
+    padding-top: 0;
+}
+
+.hero-right {
+    display: flex;
+    justify-content: center;
+}
+
+.error-message {
+    margin-top: 12px;
+
+    color: #dc2626;
+
+    font-size: 13px;
+}
+
+.result-card {
+    width: 320px;
+
+    margin-top: 14px;
+
+    padding: 14px 18px;
+
+    border-radius: 14px;
+
+    color: white;
+}
+
+.result-card h3 {
+    margin: 0 0 6px;
+
+    font-size: 18px;
+}
+
+.result-card p,
+.result-card span {
+    margin: 0;
+
+    font-size: 14px;
+}
+
+.approved-result {
+    background: #16a34a;
+}
+
+.rejected-result {
+    background: #dc2626;
+}
+
+/* מעלה את ה־Region list וה־picker */
+.transaction-form {
+    margin-top: -12px;
+}
+
+.region-select-wrapper {
+    top: -10px;
+}
+
+.time-picker {
+    margin-top: -8px;
+}
+
+@media (max-width: 1100px) {
+    .transactions-page {
+        height: auto;
+
+        overflow: auto;
+    }
+
+    .transactions-header {
+        padding: 0 24px;
+    }
+
+    .hero-section {
+        width: auto;
+
+        margin: 30px 24px;
+
+        grid-template-columns: 1fr;
+
+        gap: 40px;
+    }
+
+    .hero-right {
+        justify-content: center;
+    }
+
+    .transaction-form {
+        margin-top: 0;
+    }
+
+    .region-select-wrapper {
+        top: 0;
+    }
+
+    .time-picker {
+        margin-top: 0;
+    }
+}

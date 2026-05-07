@@ -1,0 +1,110 @@
+.approved-transactions {
+    width: 1120px;
+
+    margin: 55px auto 0;
+}
+
+.approved-transactions h2 {
+    margin: 0 0 32px;
+
+    font-size: 28px;
+    font-weight: 400;
+
+    color: #111827;
+}
+
+.transactions-wrapper {
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+}
+
+.transactions-grid {
+    flex: 1;
+
+    display: flex;
+
+    gap: 24px;
+
+    overflow-x: auto;
+
+    scroll-behavior: smooth;
+
+    scrollbar-width: none;
+}
+
+.transactions-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.transaction-card {
+    min-width: 220px;
+
+    min-height: 76px;
+
+    padding: 16px 20px;
+
+    border: 1px solid #d7e0ea;
+    border-radius: 6px;
+
+    background: rgba(255, 255, 255, 0.75);
+
+    flex-shrink: 0;
+}
+
+.transaction-card h3 {
+    margin: 0 0 6px;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    color: #111827;
+}
+
+.transaction-card p {
+    margin: 0;
+
+    font-size: 14px;
+
+    color: #6b7280;
+}
+
+.arrow-button {
+    width: 28px;
+    height: 28px;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 24px;
+
+    color: #111827;
+
+    flex-shrink: 0;
+
+    transition: transform 0.2s ease;
+}
+
+.arrow-button:hover {
+    transform: scale(1.12);
+}
+
+@media (max-width: 1100px) {
+    .approved-transactions {
+        width: auto;
+
+        margin: 60px 24px 0;
+    }
+
+    .transactions-grid {
+        gap: 18px;
+    }
+
+    .transaction-card {
+        min-width: 240px;
+    }
+}

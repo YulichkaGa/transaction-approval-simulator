@@ -1,0 +1,99 @@
+.hero-illustration {
+    width: 100%;
+
+    text-align: center;
+}
+
+.hero-badge {
+    display: inline-block;
+
+    padding: 6px 18px;
+
+    border: 1px solid #cfd8e3;
+    border-radius: 10px;
+
+    background: transparent;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.hero-illustration h1 {
+    margin: 16px 0 28px;
+
+    font-size: 26px;
+    font-weight: 400;
+
+    color: #111827;
+}
+
+.illustration-wrapper {
+    width: 100%;
+    max-width: 560px;
+
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    align-items: center;
+
+    padding: 24px 28px;
+}
+
+.illustration-text-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.illustration-phone-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mock-text {
+    direction: rtl;
+
+    text-align: center;
+
+    line-height: 1.1;
+
+    font-size: 24px;
+    font-weight: 700;
+
+    color: #3f007d;
+}
+
+.phone {
+    transform: rotate(8deg);
+}
+
+.phone-image {
+    width: 150px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+@media (max-width: 900px) {
+    .illustration-wrapper {
+        grid-template-columns: 1fr;
+
+        gap: 24px;
+    }
+
+    .mock-text {
+        font-size: 22px;
+    }
+
+    .phone {
+        transform: none;
+    }
+
+    .phone-image {
+        width: 130px;
+    }
+}
