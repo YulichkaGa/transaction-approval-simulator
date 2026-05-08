@@ -10,64 +10,105 @@ import { translations } from '../constants/translations';
 function useTransactions() {
     const [region, setRegion] = useState('Israel');
 
-    const [hour, setHour] = useState('20');
+    const [hour, setHour] = useState('10');
+
     const [minute, setMinute] = useState('00');
 
-    const [approvedTransactions, setApprovedTransactions] = useState([]);
-    const [lastResult, setLastResult] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState('');
-    const [language, setLanguage] = useState('en');
+    const [approvedTransactions, setApprovedTransactions] =
+        useState([]);
+
+    const [lastResult, setLastResult] =
+        useState(null);
+
+    const [isLoading, setIsLoading] =
+        useState(false);
+
+    const [error, setError] =
+        useState('');
+
+    const [language, setLanguage] = useState(
+        localStorage.getItem('language') || 'en'
+    );
 
     const t = translations[language];
+    useEffect(() => {
+        localStorage.setItem('language', language);
+    }, [language]);
 
     const loadApprovedTransactions = async () => {
         try {
-            const data = await getApprovedTransactions();
+            const data =
+                await getApprovedTransactions();
+
             setApprovedTransactions(data);
-        } catch {
+        } catch (error) {
+            if (error.response?.status === 401) {
+                localStorage.removeItem('token');
+
+                return;
+            }
+
             setError(t.loadApprovedError);
         }
     };
 
     useEffect(() => {
-        void loadApprovedTransactions();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        const token =
+            localStorage.getItem('token');
+
+        if (!token) {
+            return;
+        }
+
+        const timeoutId = setTimeout(() => {
+            void loadApprovedTransactions();
+        }, 0);
+
+        return () => clearTimeout(timeoutId);
     }, []);
+
+    const clearResult = () => {
+        setLastResult(null);
+
+        setError('');
+    };
 
     const submitTransaction = async (event) => {
         event.preventDefault();
 
-        const parsedHour = Number(hour);
-        const parsedMinute = Number(minute);
+        const token =
+            localStorage.getItem('token');
 
-        if (
-            Number.isNaN(parsedHour) ||
-            Number.isNaN(parsedMinute) ||
-            parsedHour < 0 ||
-            parsedHour > 23 ||
-            parsedMinute < 0 ||
-            parsedMinute > 59
-        ) {
-            setError(t.selectTimeError);
+        if (!token) {
+            setError('Please login first.');
+
             return;
         }
 
         setIsLoading(true);
+
         setError('');
 
         try {
-            const utcDate = new Date();
+            const now = new Date();
 
-            utcDate.setUTCHours(parsedHour);
-            utcDate.setUTCMinutes(parsedMinute);
-            utcDate.setUTCSeconds(0);
-            utcDate.setUTCMilliseconds(0);
+            const utcDate = new Date(
+                Date.UTC(
+                    now.getUTCFullYear(),
+                    now.getUTCMonth(),
+                    now.getUTCDate(),
+                    Number(hour),
+                    Number(minute),
+                    0
+                )
+            );
 
-            const result = await simulateTransaction({
-                region,
-                submittedUtcTime: utcDate.toISOString(),
-            });
+            const result =
+                await simulateTransaction({
+                    region,
+                    submittedUtcTime:
+                        utcDate.toISOString(),
+                });
 
             setLastResult(result);
 
@@ -85,20 +126,26 @@ function useTransactions() {
 
         hour,
         setHour,
+
         minute,
         setMinute,
 
         approvedTransactions,
+
         lastResult,
 
         isLoading,
+
         error,
 
         language,
         setLanguage,
+
         t,
 
         submitTransaction,
+
+        clearResult,
     };
 }
 

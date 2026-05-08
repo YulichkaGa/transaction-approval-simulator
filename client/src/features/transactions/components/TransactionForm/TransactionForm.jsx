@@ -18,6 +18,7 @@ function TransactionForm({
                              minute,
                              setMinute,
                              onSubmit,
+                             clearResult,
                              isLoading,
                          }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -124,6 +125,8 @@ function TransactionForm({
                         onClick={() => {
                             setHour('20');
                             setMinute('00');
+
+                            clearResult();
                         }}
                     >
                         {t.cancel}
