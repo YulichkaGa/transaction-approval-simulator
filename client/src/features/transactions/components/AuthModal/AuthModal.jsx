@@ -9,7 +9,6 @@ function AuthModal({
                        setMode,
                        t,
                        language,
-                       setLanguage,
                    }) {
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
@@ -20,6 +19,19 @@ function AuthModal({
 
     const isLogin = mode === 'login';
 
+    const resetForm = () => {
+        setFullName('');
+        setEmail('');
+        setPassword('');
+        setError('');
+    };
+
+    const handleSwitchMode = () => {
+        resetForm();
+
+        setMode(isLogin ? 'register' : 'login');
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -29,13 +41,21 @@ function AuthModal({
         try {
             const result = isLogin
                 ? await login({ email, password })
-                : await register({ fullName, email, password });
+                : await register({
+                    fullName,
+                    email,
+                    password,
+                });
 
             localStorage.setItem('token', result.token);
 
             window.location.reload();
         } catch {
-            setError(isLogin ? t.loginFailed : t.registerFailed);
+            setError(
+                isLogin
+                    ? t.loginFailed
+                    : t.registerFailed
+            );
         } finally {
             setIsLoading(false);
         }
@@ -48,16 +68,18 @@ function AuthModal({
                 onSubmit={handleSubmit}
                 dir={language === 'he' ? 'rtl' : 'ltr'}
             >
-
-
-                <h2>{isLogin ? t.login : t.register}</h2>
+                <h2>
+                    {isLogin ? t.login : t.register}
+                </h2>
 
                 {!isLogin && (
                     <input
                         type="text"
                         placeholder={t.fullName}
                         value={fullName}
-                        onChange={(event) => setFullName(event.target.value)}
+                        onChange={(event) =>
+                            setFullName(event.target.value)
+                        }
                     />
                 )}
 
@@ -65,14 +87,18 @@ function AuthModal({
                     type="email"
                     placeholder={t.email}
                     value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    onChange={(event) =>
+                        setEmail(event.target.value)
+                    }
                 />
 
                 <input
                     type="password"
                     placeholder={t.password}
                     value={password}
-                    onChange={(event) => setPassword(event.target.value)}
+                    onChange={(event) =>
+                        setPassword(event.target.value)
+                    }
                 />
 
                 {error && (
@@ -81,7 +107,10 @@ function AuthModal({
                     </p>
                 )}
 
-                <button type="submit" disabled={isLoading}>
+                <button
+                    type="submit"
+                    disabled={isLoading}
+                >
                     {isLoading
                         ? t.loading
                         : isLogin
@@ -96,9 +125,7 @@ function AuthModal({
 
                     <button
                         type="button"
-                        onClick={() =>
-                            setMode(isLogin ? 'register' : 'login')
-                        }
+                        onClick={handleSwitchMode}
                     >
                         {isLogin ? t.register : t.login}
                     </button>
